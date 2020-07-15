@@ -35,7 +35,7 @@ class Round
     end
 
     def play_turn
-        puts "Enter placement: "
+        print "Enter placement: "
         user_input = gets.chomp
         user_input_array = user_input.split(",")
         user_input_to_i = user_input_array.map(&:to_i)
