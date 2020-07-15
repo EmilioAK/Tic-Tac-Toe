@@ -40,13 +40,17 @@ class Round
         user_input_array = user_input.split(",")
         user_input_to_i = user_input_array.map(&:to_i)
         
-        @board.insert_piece(@whos_turn, *user_input_to_i)
+        @boardInstance.insert_piece(@whos_turn, *user_input_to_i)
         increment_turn
-        @board.print_board
-        p row_won?(@board)
+        @boardInstance.print_board
+    end
+
+    def play_round
+        until round_won?(@board) do
+           play_turn 
+        end
     end
 end
 
 round = Round.new
-round.play_turn
-round.play_turn
+round.play_round

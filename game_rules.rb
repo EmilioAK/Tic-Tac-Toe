@@ -1,52 +1,43 @@
-require_relative 'game_rules.rb'
-
-class Board  
-    attr_reader :board
-    
-    def initialize
-        create_board
-    end
-
-    def create_board
-        @board = Array.new(3) { Array.new(3, [" "]) }
-    end
-    
-    def print_board
-        @board.each { |row| p row }
-    end
-
-    def insert_piece(piece, row, cell)
-        piece == 0 ? piece = "X" : piece = "O"
-        @board[row][cell] = [piece]
-    end
+class Array
+  def same_values?
+    self.uniq.length == 1
+  end
 end
 
-class Round
-    include GameRules
-    
-    def initialize
-        @whos_turn = 0 # Is either 0 or 1
-        @boardInstance = Board.new
-        @board = @boardInstance.board
+module GameRules
+  def winning_line?(board)
+    board.each do |line|
+      if line.all? { |cell| cell == [" "]}
+        return false
+      end
+      if line.same_values?
+        return true
+      end
     end
+      return false
+  end
 
-    def increment_turn
-        @whos_turn = (@whos_turn + 1) % 2
-    end
+  def row_won?(board)
+    return winning_line?(board)
+  end
 
-    def play_turn
-        puts "Enter placement: "
-        user_input = gets.chomp
-        user_input_array = user_input.split(",")
-        user_input_to_i = user_input_array.map(&:to_i)
-        
-        @boardInstance.insert_piece(@whos_turn, *user_input_to_i)
-        increment_turn
-        @boardInstance.print_board
-        p row_won?(@board)
+  def column_won?(board)
+    columns = board.transpose
+    return winning_line?(columns)
+  end
+
+  def diagonal_won?(board)
+    first_diagonal = (0..2).collect { |i| board[i][i] }
+    second_diagonal = (0..2).collect { |i| board.reverse[i][i] }
+
+    diagonals = [first_diagonal, second_diagonal]
+    return winning_line?(diagonals)
+  end
+
+  def round_won?(board)
+    if row_won?(board) || column_won?(board) || diagonal_won?(board)
+      return true
     end
+    return false
+  end
 end
-
-round = Round.new
-round.play_turn
-round.play_turn
