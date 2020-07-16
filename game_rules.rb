@@ -35,9 +35,6 @@ module GameRules
   end
 
   def round_won?(board)
-    if row_won?(board) || column_won?(board) || diagonal_won?(board)
-      return true
-    end
-    return false
+    return row_won?(board) || column_won?(board) || diagonal_won?(board)
   end
 end
