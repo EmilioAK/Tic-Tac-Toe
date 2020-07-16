@@ -5,9 +5,15 @@ class Array
 end
 
 module GameRules
+  $empty_cell = [" "]
+  
+  def valid_placement?(cell)
+    return cell == $empty_cell
+  end
+  
   def winning_line?(board)
     board.each do |line|
-      if line.all? { |cell| cell == [" "] }
+      if line.all? { |cell| cell == $empty_cell }
         return false
       end
       if line.same_values?

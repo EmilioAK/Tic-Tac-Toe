@@ -21,7 +21,12 @@ class Round
         user_input_array = user_input.split(",")
         user_input_to_i = user_input_array.map(&:to_i)
         
-        @game_board.insert_piece(@whos_turn, *user_input_to_i)
+        begin
+            @game_board.insert_piece(@whos_turn, *user_input_to_i)
+        rescue => placement_error
+            puts placement_error
+            play_turn # This solution prevents increment_turn from running
+        end
     end
 
     def play_round
