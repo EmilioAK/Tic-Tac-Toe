@@ -7,7 +7,7 @@ end
 module GameRules
   def winning_line?(board)
     board.each do |line|
-      if line.all? { |cell| cell == [" "]}
+      if line.all? { |cell| cell == [" "] }
         return false
       end
       if line.same_values?
