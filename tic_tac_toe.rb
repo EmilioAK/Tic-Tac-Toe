@@ -35,13 +35,14 @@ class Round
     end
 
     def play_turn
+        @boardInstance.print_board
         print "Enter placement: "
+        
         user_input = gets.chomp
         user_input_array = user_input.split(",")
         user_input_to_i = user_input_array.map(&:to_i)
         
         @boardInstance.insert_piece(@whos_turn, *user_input_to_i)
-        @boardInstance.print_board
     end
 
     def play_round
@@ -49,7 +50,7 @@ class Round
             increment_turn
             play_turn 
         end
-        p @whos_turn
+        puts "Player #{@whos_turn + 1} won!"
     end
 end
 
