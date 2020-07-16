@@ -15,14 +15,11 @@ class Round
 
     def play_turn
         @game_board.print_board
-        print "Enter placement: "
-        
-        user_input = gets.chomp
-        user_input_array = user_input.split(",")
-        user_input_to_i = user_input_array.map(&:to_i)
+        print "Enter placement: "        
+        user_input = gets.chomp.split(",").map(&:to_i) # Makes the input a list of ints
         
         begin
-            @game_board.insert_piece(@whos_turn, *user_input_to_i)
+            @game_board.insert_piece(@whos_turn, *user_input)
         rescue => placement_error
             puts placement_error
             play_turn # This solution prevents increment_turn from running
