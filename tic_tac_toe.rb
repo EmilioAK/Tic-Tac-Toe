@@ -25,7 +25,7 @@ class Round
     include GameRules
     
     def initialize
-        @whos_turn = 0 # Is either 0 or 1
+        @whos_turn = 1 # Is either 0 or 1
         @boardInstance = Board.new
         @board = @boardInstance.board
     end
@@ -41,14 +41,15 @@ class Round
         user_input_to_i = user_input_array.map(&:to_i)
         
         @boardInstance.insert_piece(@whos_turn, *user_input_to_i)
-        increment_turn
         @boardInstance.print_board
     end
 
     def play_round
         until round_won?(@board) do
-           play_turn 
+            increment_turn
+            play_turn 
         end
+        p @whos_turn
     end
 end
 
