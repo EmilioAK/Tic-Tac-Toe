@@ -13,11 +13,17 @@ class Round
         @whos_turn = (@whos_turn + 1) % 2
     end
 
+    def get_user_input
+      @game_board.print_board
+      print "Enter placement: "        
+      user_input = gets.chomp.split(",").map(&:to_i) # Makes the input a list of ints
+      puts "" # Newline after since it looks nicer
+      
+      return user_input
+    end
+
     def play_turn
-        @game_board.print_board
-        print "Enter placement: "        
-        user_input = gets.chomp.split(",").map(&:to_i) # Makes the input a list of ints
-        
+        user_input = get_user_input
         begin
             @game_board.insert_piece(@whos_turn, *user_input)
         rescue => placement_error
