@@ -40,7 +40,23 @@ module GameRules
     return winning_line?(diagonals)
   end
 
+  def board_filled?(board)
+    board.each do |line|
+      if line.any? { |cell| cell == $empty_cell }
+        return false
+      end
+    end
+    return true
+  end
+
   def round_won?(board)
     return row_won?(board) || column_won?(board) || diagonal_won?(board)
+  end
+
+  def tie?(board)
+    if board_filled?(board) && !round_won?(board)
+      return true
+    end
+    return false
   end
 end

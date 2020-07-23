@@ -33,11 +33,17 @@ class Round
     end
 
     def play_round
-        until round_won?(@game_board.board) do
+        until round_won?(@game_board.board) || board_filled?(@game_board.board) do
             increment_turn
             play_turn 
         end
-        puts "Player #{@whos_turn + 1} won!"
-        return @whos_turn + 1
+
+        if tie?(@game_board.board)
+            puts "Round was tied! No one got points!"
+            return "Tie"
+        else
+            puts "Player #{@whos_turn + 1} won!"
+            return @whos_turn + 1
+        end
     end
 end
